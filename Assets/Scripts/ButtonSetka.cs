@@ -4,11 +4,13 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
-using UnityEditor.Build;
 
 public class ButtonSetka : MonoBehaviour
 {
     private Button button;
+    public int score { get; set; } = 0;
+    public delegate void ScoreUpdated(int newScore);
+    public event ScoreUpdated OnScoreUpdated;
 
     private void Start()
     {
@@ -17,7 +19,9 @@ public class ButtonSetka : MonoBehaviour
     }
     private void OnClick()
     {
-        Destroy(gameObject);
+        score += 1;
+        OnScoreUpdated?.Invoke(score);
+        gameObject.SetActive(false);
     }
 
 }
